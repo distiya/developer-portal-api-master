@@ -1,0 +1,810 @@
+{
+	"info": {
+		"_postman_id": "520681a8-2a3a-48f2-b72c-b12e63636429",
+		"name": "FAA Notam Developer Portal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Admin Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4aebeab9-590e-4992-9a21-971139ab919d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.environment.set(\"adminToken\", pm.response.json().token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@developer-portal.notam.faa.gov\",\n    \"password\": \"Password!@#\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"billy@example.com\",\n    \"password\": \"Passw0rd!@#\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentPassword\": \"Password!@#\",\n    \"newPassword\": \"pASSWORD123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/user/1/password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user",
+								"1",
+								"password"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Create Admin User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"User 01\",\n    \"email\": \"user01@example.com\",\n    \"password\": \"password123!@#\",\n    \"company\": \"Google\",\n    \"address\": \"1 Ocean St\",\n    \"city\": \"New York\",\n    \"state\": \"VIC\",\n    \"country\": \"AU\",\n    \"zipCode\": \"3001\",\n    \"primaryPhone\": \"0412345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/user/register/admin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user",
+								"register",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Created Admin User Can Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eb19f90b-a7c9-43b3-a306-844f21c9600c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    const token = pm.response.json().token;",
+									"    const body = JSON.parse(CryptoJS.enc.Utf8.stringify(CryptoJS.enc.Base64.parse(token.split(\".\")[1])));",
+									"    pm.environment.set('adminUserId', body.userId);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user01@example.com\",\n    \"password\": \"password123!@#\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Admin User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/user/{{adminUserId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user",
+								"{{adminUserId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Admin User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/user/{{adminUserId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user",
+								"{{adminUserId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deleted Admin User Can Not Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "67d5a8b1-6271-4590-91b2-0674d6969b1c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    const token = pm.response.json().token;",
+									"    const body = JSON.parse(CryptoJS.enc.Utf8.stringify(CryptoJS.enc.Base64.parse(token.split(\".\")[1])));",
+									"    pm.environment.set('adminUserId', body.userId);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user01@example.com\",\n    \"password\": \"password123!@#\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/user?sortBy=createdAt&sortOrder=Desc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortOrder",
+									"value": "Desc"
+								},
+								{
+									"key": "email",
+									"value": "USer",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "01",
+									"disabled": true
+								},
+								{
+									"key": "isApproved",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/user/6/approve",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user",
+								"6",
+								"approve"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enable User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/user/{{adminUserId}}/enable",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user",
+								"{{adminUserId}}",
+								"enable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disable User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/user/{{adminUserId}}/disable",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user",
+								"{{adminUserId}}",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{adminToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5f671635-72f3-4568-960a-4966aba46526",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "100a357f-c681-4f36-992b-d989321b02f8",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User Registration",
+			"item": [
+				{
+					"name": "User register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"Billy Will\",\n    \"email\": \"billy@example.com\",\n    \"password\": \"password123!@#\",\n    \"company\": \"Google\",\n    \"address\": \"1 Ocean St\",\n    \"city\": \"New York\",\n    \"state\": \"VIC\",\n    \"country\": \"AU\",\n    \"zipCode\": \"3001\",\n    \"primaryPhone\": \"0412345678\",\n    \"reCaptchaResponse\": \"03AGdBq24wt1AKLCGb20p-emq0ruvrnlVMJJnfIwh_-njqTqUdGKCC1o5bWO2KcGG6qC8DtanaA6rfOraNT5_4vDH6SeK-LnaergfbNtFcE5n6Vr4X0ZtXlUjtkCNepod5WXHC4TSqwrxqTofBONL4NOqtPm53fuYHvOL22IeznVYSdBj8HTsLkzq_JoI8kvTn31jeX8EoVBhNhzng3ddzLpC_2EI75M4AaYq3Rh8PNe7ENr8tNVWLNPMyKTtfaG-G0OUN9Rs68f32zcN0Wc9ubg_ZrTgJ-nFGZLiMVmJlfSiYrwiUigvRjKfH6nY8FHeQ1JY-QFJxL2HPKSxnh1t75ZVj5nt8HheFC93JfGdf3spyqSuSRW-3xdGW1sbhiHk2N-ExD48hu32HdWkkYXV-I5D3BntgQ7weSqAqqs1Kr_ve_R8UQrE-WGkHV6miXlOgxSkMWCjGdbm38zG_rcFHCZ0NTtNaunmS47EnkqNFpP770IEQxnF5yhmYt3KSr5BOHJg5fgLrHtcW\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/user/register/apiUser",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user",
+								"register",
+								"apiUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/user/6/verifyEmail?code=QatfQcaLqo_kBDSOHd5ANQ==",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user",
+								"6",
+								"verifyEmail"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "QatfQcaLqo_kBDSOHd5ANQ=="
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Forgot Password",
+			"item": [
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"billy@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/user/password/requestReset",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user",
+								"password",
+								"requestReset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newPassword\": \"Passw0rd!@#\",\n    \"token\": \"CpNEaoUTLit09O6JJcEpSg==\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/user/6/password/reset",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"user",
+								"6",
+								"password",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Feedback",
+			"item": [
+				{
+					"name": "Send Feedback Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{adminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"comments\": \"This is ok.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/support/feedback",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"support",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Api Token",
+			"item": [
+				{
+					"name": "Create Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/notamApiToken",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"notamApiToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/notamApiToken",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"notamApiToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Token",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/notamApiToken/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"notamApiToken",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/notamApiToken/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"notamApiToken",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Token",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/ver1/notamApiToken/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"notamApiToken",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enable Token",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/notamApiToken/2/enable",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"notamApiToken",
+								"2",
+								"enable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disable Token",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/ver1/notamApiToken/2/disable",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ver1",
+								"notamApiToken",
+								"2",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{adminToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ad0a6c06-775f-40ab-904b-39d5cc614782",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "29c4ef2f-a04f-4f4d-a71e-d44b7a444a07",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

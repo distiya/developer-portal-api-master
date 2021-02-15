@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ReCaptcha Test</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+
+<form action="?">
+    <div class="g-recaptcha" data-sitekey="6LfU8gEaAAAAAODSVCxoPW2zyUy4NGc_kerxM5BZ"></div>
+    <br/>
+    <input type="submit" value="submit">
+</form>
+
+<h3>Response</h3>
+
+<p id="response"></p>
+
+<script>
+    $(function () {
+        const key = 'g-recaptcha-response';
+        const params = new URLSearchParams(window.location.search);
+        if (params.has(key)) {
+            $('#response').html(params.get(key));
+        }
+    });
+</script>
+</body>
+</html>

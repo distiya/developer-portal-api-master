@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  developer-portal-api:
+    build:
+      context: .
+    ports:
+      - "8082:80"
+    environment:
+      DB_URL: "jdbc:postgresql://db:5432/faa-notam-developer-portal"
+      DB_USER: postgres
+      DB_PASS: Topcoder123
+      DB_DRIVER: org.postgresql.Driver
+      MAIL_HOST: maildev
+      MAIL_PORT: 25
+      MAIL_USER: smtp-user
+      MAIL_PASS: smtp-pass
+      RECAPTCHA_SECRET_KEY: "6LfdKTEaAAAAAJ9izzdK2KtfOvYsjqiXYr9pakb1"
+      PORT: 80
+  maildev:
+    image: maildev/maildev
+    ports:
+      - "25:25"
+      - "1080:80"
+  db:
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: Topcoder123
+      POSTGRES_DB: faa-notam-developer-portal
+    ports:
+      - "5432:5432"
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+      - "./db-init:/docker-entrypoint-initdb.d"
+
+volumes:
+  db-data:

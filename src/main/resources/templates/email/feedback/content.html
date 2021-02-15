@@ -1,0 +1,9 @@
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<p>From: [[${email}]]</p>
+<p>Date: [[${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}]]</p>
+<p>Comments:</p>
+<p th:text="${comments}"></p>
+</body>
+</html>

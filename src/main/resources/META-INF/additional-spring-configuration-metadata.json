@@ -1,0 +1,54 @@
+{
+  "properties": [
+    {
+      "name": "security.secret.jwt",
+      "type": "java.lang.String",
+      "description": "JWT signing and verification secret."
+    },
+    {
+      "name": "security.secret.pbkdf2",
+      "type": "java.lang.String",
+      "description": "Password hashing secret."
+    },
+    {
+      "name": "security.jwt.valid.duration",
+      "type": "java.lang.String",
+      "description": "Valid duration of a JWT token."
+    },
+    {
+      "name": "recaptcha.secret.key",
+      "type": "java.lang.String",
+      "description": "ReCaptcha Secret key."
+    },
+    {
+      "name": "security.password.policy",
+      "type": "java.lang.String",
+      "description": "Password policy configuration file."
+    },
+    {
+      "name": "mail.templates.path",
+      "type": "java.lang.String",
+      "description": "Path to the mail templates."
+    },
+    {
+      "name": "mail.from",
+      "type": "java.lang.String",
+      "description": "Email from address."
+    },
+    {
+      "name": "pagination.limit.max",
+      "type": "java.lang.String",
+      "description": "Max page size."
+    },
+    {
+      "name": "pagination.limit.default",
+      "type": "java.lang.String",
+      "description": "Default page size."
+    },
+    {
+      "name": "mail.feedback",
+      "type": "java.lang.String",
+      "description": "Email address to send feedback to."
+    }
+  ]
+}

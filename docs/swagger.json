@@ -1,0 +1,3460 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "FAA NOTAM: Developer Portal API",
+    "description": "Backend REST API for the NOTAM Developer Portal",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://localhot:8080/api/ver{version}/",
+      "description": "Local Development",
+      "variables": {
+        "version": {
+          "default": "1",
+          "description": "The API version number"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logs in user with given credentials.",
+        "description": "JWT Bearer authentication should be used.",
+        "requestBody": {
+          "description": "The login credentials model.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResultModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - No user with such credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - If user is Disabled or not Approved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notamApiAccessItem/{id}": {
+      "delete": {
+        "tags": [
+          "NotamApiAccessItem"
+        ],
+        "summary": "Deletes NOTAM API/SDK access item.",
+        "description": "<p>Allowed roles: Admin</p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The NOTAM API/SDK access item Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The NOTAM API/SDK access item Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "NotamApiAccessItem"
+        ],
+        "summary": "Retrieves NOTAM API/SDK access item.",
+        "description": "<p>\r\n            Response fields may be adjusted during development phase based on wireframes.\r\n            </p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The NOTAM API/SDK access item Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The NOTAM API/SDK access item Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotamApiAccessItemModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "NotamApiAccessItem"
+        ],
+        "summary": "Updates NOTAM API/SDK access item.",
+        "description": "<p>Allowed roles: Admin</p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The NOTAM API/SDK access item Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The NOTAM API/SDK access item Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The updated model.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNotamApiAccessItemModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNotamApiAccessItemModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNotamApiAccessItemModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/notamApiAccessItem/{id}/file": {
+      "get": {
+        "tags": [
+          "NotamApiAccessItem"
+        ],
+        "summary": "Downloads NOTAM API/SDK file for the given access item Id.",
+        "description": "<p></p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The NOTAM API/SDK access item Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The NOTAM API/SDK access item Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notamApiAccessItem": {
+      "get": {
+        "tags": [
+          "NotamApiAccessItem"
+        ],
+        "summary": "Searches NOTAM API/SDK access items matching given criteria parameters.",
+        "description": "<p>\r\n            Provided parameters are just an example. Final parameter list will be defined during development phase based on the wireframes. (same for returned fields)\r\n            </p>\r\n<p>All string fields will be matched using 'Contains' comparison. All non-null criterias should be AND-ed.</p>\r\n<p>\r\n            Default sort is by 'Created Date' descending. Please confirm during development based on wireframes.\r\n            </p>\r\n<p>Default and maximum 'limit' should be configurable in backend config.</p>",
+        "parameters": [
+          {
+            "name": "itemType",
+            "in": "query",
+            "description": "Type of the access item criteria.",
+            "schema": {
+              "$ref": "#/components/schemas/NotamApiAccessItemType"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "The keyword criteria.",
+            "schema": {
+              "type": "string",
+              "description": "The keyword criteria.",
+              "nullable": true
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The name of the field to sort by.",
+            "schema": {
+              "type": "string",
+              "description": "The name of the field to sort by.",
+              "default": "CreatedDate",
+              "nullable": true
+            }
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "description": "The sort order.",
+            "schema": {
+              "$ref": "#/components/schemas/SortOrder"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The offset.",
+            "schema": {
+              "type": "integer",
+              "description": "The offset.",
+              "format": "int32",
+              "default": 0,
+              "nullable": true
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The limit.",
+            "schema": {
+              "type": "integer",
+              "description": "The limit.",
+              "format": "int32",
+              "default": 20,
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotamApiAccessItemModelSearchResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "NotamApiAccessItem"
+        ],
+        "summary": "Creates new NOTAM API/SDK access item.",
+        "description": "<p>Allowed roles: Admin</p>\r\n<p>\r\n            Response fields may be adjusted during development phase based on wireframes.\r\n            </p>",
+        "requestBody": {
+          "description": "The NOTAM API/SDK access item details.",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotamApiAccessItemModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotamApiAccessItemModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/notamApiToken/{id}": {
+      "delete": {
+        "tags": [
+          "NotamApiToken"
+        ],
+        "summary": "Deletes API Token with the given Id.",
+        "description": "<p>Allowed roles: Admin and Regular User can delete self API tokens only</p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The API Token Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The API Token Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "NotamApiToken"
+        ],
+        "summary": "Retrieves API Token with the given Id.",
+        "description": "<p>Allowed roles: Admin and Regular User</p>\r\n<p>Regular User can only access his/her own API Token</p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The API Token Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The API Token Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotamApiTokenModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "NotamApiToken"
+        ],
+        "summary": "Updates API Token with the given Id.",
+        "description": "<p>Allowed roles: Admin and Regular User can update self API tokens only</p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The API Token Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The API Token Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The update API Token model.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNotamApiTokenModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNotamApiTokenModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNotamApiTokenModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/notamApiToken": {
+      "get": {
+        "tags": [
+          "NotamApiToken"
+        ],
+        "summary": "Searches NOTAM API Tokens matching given criteria parameters.",
+        "description": "<p>Allowed roles: Admin, Regular User</p>\r\n<p>For Regular User, the 'userId' parameter will be ignored and always set to current user's Id.</p>\r\n<p>\r\n            Provided parameters are just an example. Final parameter list will be defined during development phase based on the wireframes. (same for returned API Token fields)\r\n            </p>\r\n<p>All string fields will be matched using 'Contains' comparison. All non-null criterias should be AND-ed.</p>\r\n<p>Default and maximum 'limit' should be configurable in backend config.</p>",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "The owner user Id criteria.",
+            "schema": {
+              "type": "integer",
+              "description": "The owner user Id criteria.",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "The user name criteria.",
+            "schema": {
+              "type": "string",
+              "description": "The user name criteria.",
+              "nullable": true
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The name of the field to sort by.",
+            "schema": {
+              "type": "string",
+              "description": "The name of the field to sort by.",
+              "default": "Id",
+              "nullable": true
+            }
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "description": "The sort order.",
+            "schema": {
+              "$ref": "#/components/schemas/SortOrder"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The offset.",
+            "schema": {
+              "type": "integer",
+              "description": "The offset.",
+              "format": "int32",
+              "default": 0,
+              "nullable": true
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The limit.",
+            "schema": {
+              "type": "integer",
+              "description": "The limit.",
+              "format": "int32",
+              "default": 20,
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotamApiTokenModelSearchResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "NotamApiToken"
+        ],
+        "summary": "Creates new NOTAM API token.",
+        "description": "<p>Allowed roles: Admin, Regular User</p>\r\n<p>\r\n            The API Key should be auto-generated, e.g. generate new Guid and encode it to Base64 string.\r\n            </p>\r\n<p>\r\n            Set both IsEnabledByUser and IsEnabledByAdmin to True by default.\r\n            </p>",
+        "requestBody": {
+          "description": "The NOTAM API token details.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotamApiTokenModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotamApiTokenModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotamApiTokenModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotamApiTokenModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/notamApiToken/{id}/enable": {
+      "put": {
+        "tags": [
+          "NotamApiToken"
+        ],
+        "summary": "Enables NOTAM API Token with the given Id.",
+        "description": "<p>Allowed roles: Admin, Regular User</p>\r\n<p>\r\n            If user is Admin, set 'IsEnabledByAdmin'=True. Admin can enable any API Token.\r\n            </p>\r\n<p>\r\n            If user is Regular User, set 'IsEnabledByUser'=True. Regular User can only enable his/her own API Token.\r\n            </p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The API Token Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The API Token Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/notamApiToken/{id}/disable": {
+      "put": {
+        "tags": [
+          "NotamApiToken"
+        ],
+        "summary": "Disables NOTAM API Token with the given Id.",
+        "description": "<p>Allowed roles: Admin, Regular User</p>\r\n<p>\r\n            If user is Admin, set 'IsEnabledByAdmin'=False. Admin can disable any API Token.\r\n            </p>\r\n<p>\r\n            If user is Regular User, set 'IsEnabledByUser'=False. Regular User can only disable his/her own API Token.\r\n            </p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The API Token Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The API Token Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/statistics": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "summary": "Retrieves Application and API usage statistics.",
+        "description": "<p>Allowed roles: Admin</p>",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticsModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/support/feedback": {
+      "post": {
+        "tags": [
+          "Support"
+        ],
+        "summary": "Sends user feedback to support.",
+        "description": "<p>Allowed roles: Admin, Regular User</p>\r\n<p>Retrieve support email and feedback subject/template from the config file, then construct and send the email. Make sure current user's email is included in the email body, so that support team can contact user directly.</p>",
+        "requestBody": {
+          "description": "The support feedback model.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupportFeedbackModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupportFeedbackModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupportFeedbackModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/user/{id}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Deletes user with the given Id.",
+        "description": "<p>Allowed roles: Admin</p>\r\n<p>Only admin users can be deleted. Return 403 Status Code if Admin tries to delete regular user.</p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The user Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Retrieves User with the given Id.",
+        "description": "<p>Allowed roles: Admin and Regular User</p>\r\n<p>Regular User can only access his/her own account</p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The User Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The User Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Updates user with the given Id.",
+        "description": "<p>Allowed roles: Admin and Regular User can update self accounts only</p>\r\n<p>Validate and save password similar to Register endpoint.</p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The user Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The update user model.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Searches users matching given criteria parameters.",
+        "description": "<p>Allowed roles: Admin</p>\r\n<p>\r\n            Provided parameters are just an example. Final parameter list will be defined during development phase based on the wireframes. (same for returned user fields)\r\n            </p>\r\n<p>All string fields will be matched using 'Contains' comparison. All non-null criterias should be AND-ed.</p>\r\n<p>Default and maximum 'limit' should be configurable in backend config.</p>",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "The user name criteria.",
+            "schema": {
+              "type": "string",
+              "description": "The user name criteria.",
+              "nullable": true
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The email criteria.",
+            "schema": {
+              "type": "string",
+              "description": "The email criteria.",
+              "nullable": true
+            }
+          },
+          {
+            "name": "isApproved",
+            "in": "query",
+            "description": "The flag criteria indicating whether to search approved/denied users.",
+            "schema": {
+              "type": "boolean",
+              "description": "The flag criteria indicating whether to search approved/denied users.",
+              "nullable": true
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The name of the field to sort by.",
+            "schema": {
+              "type": "string",
+              "description": "The name of the field to sort by.",
+              "default": "Id",
+              "nullable": true
+            }
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "description": "The sort order.",
+            "schema": {
+              "$ref": "#/components/schemas/SortOrder"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The offset.",
+            "schema": {
+              "type": "integer",
+              "description": "The offset.",
+              "format": "int32",
+              "default": 0,
+              "nullable": true
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The limit.",
+            "schema": {
+              "type": "integer",
+              "description": "The limit.",
+              "format": "int32",
+              "default": 20,
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserModelSearchResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/user/register/apiUser": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Registers new regular user.",
+        "description": "<p>reCaptcha verification: Required. To validate use reCAPTCHA secret key and 'ReCaptchaResponse' from the request model. The reCAPTCHA secret key must be configured in backend config.\r\n            For more details, see - https://developers.google.com/recaptcha/docs/verify\r\n            </p>\r\n<p>Password strength should be configurable in backend config. Return Bad Request in case password validation fails.</p>\r\n<p>Generate random email verification code (Base64URL). Construct URL using 'userId' and 'verification code' values. Send email to the user with constructed URL. The URL template should be configurable in backend config.</p>\r\n<p>Email must be unique. If user with same Email is already registered, then if IsApproved!=NULL return 409 (Conflict) Status Code;\r\n            otherwise update fields in existing record and proceed with the standard registration flow - this way we are allowing updating data and re-sending verification email.</p>",
+        "requestBody": {
+          "description": "The register model.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterUserModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterUserModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterUserModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully registered"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT - if there is some conflict between provided and existing data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/register/admin": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Registers new admin user.",
+        "description": "<p>Allowed roles: Admin</p>\r\n<p>Re-Captcha verification: not needed, because it is not anonymous operation (Admin already logged in).</p>\r\n<p>Password strength should be configurable in backend config. Return Bad Request in case password validation fails.</p>\r\n<p>Generate random email verification code (Base64URL). Construct URL using 'userId' and 'verification code' values. Send email to the user with constructed URL. The URL template should be configurable in backend config.</p>",
+        "requestBody": {
+          "description": "The register model.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterAdminModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterAdminModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterAdminModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatedItemModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/user/{id}/verifyEmail": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Verifies user email.",
+        "description": "<p>\r\n            Compare the provided code with the 'EmailConfirmationCode' of the corresponding user.\r\n            If code matches, set the 'IsEmailConfirmed'=True. If user is Admin, set 'IsEnabled'=True and 'IsApproved'=True (no need to approve admin user).\r\n            </p>\r\n<p>If matching combination of user and code is not found, return 404 Status Code.</p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The user Id.",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "The email verification code.",
+            "schema": {
+              "type": "string",
+              "description": "The email verification code.",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}/approve": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Approves user registration.",
+        "description": "<p>Allowed roles: Admin</p>\r\n<p>\r\n            If 'IsApproved' for the given user is not NULL, return 409 Status Code - don't allow to Approve/Reject multiple times.\r\n            </p>\r\n<p>\r\n            Set 'IsEnabled'=True and 'IsApproved'=True.\r\n            </p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The user Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT - if there is some conflict between provided and existing data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/user/{id}/deny": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Denies user registration.",
+        "description": "<p>Allowed roles: Admin</p>\r\n<p>\r\n            If 'IsApproved' for the given user is not NULL, return 409 Status Code - don't allow to Approve/Reject multiple times.\r\n            </p>\r\n<p>\r\n            Set 'IsApproved'=False.\r\n            </p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The user Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT - if there is some conflict between provided and existing data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/user/password/requestReset": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Requests password reset by sending password reset URL to user's email.",
+        "description": "<p>\r\n            Generate random password reset token (Base64URL).\r\n            Construct URL by using 'user Id' and 'password reset token' values.\r\n            Send email to the user with constructed URL.\r\n            </p>\r\n<p>\r\n            The URL template should be configurable in backend config.\r\n            </p>\r\n<p>\r\n            In case user with given email doesn't exist - return 200 Status Code, because we don't want to expose existing/missing emails in the anonymous endpoint.\r\n            </p>\r\n<p>\r\n            In case user with given email is not Approved yet, return 409 Status Code.\r\n            </p>",
+        "requestBody": {
+          "description": "The forgot password model.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success - Email with password reset link was sent"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT - if there is some conflict between provided and existing data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}/password/reset": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Resets user's password.",
+        "description": "<p>\r\n            Compare the provided token with the 'PasswordResetToken' of the corresponding user.\r\n            If token matches, verify and set user password similar to Register endpoint.\r\n            </p>\r\n<p>\r\n            If matching combination of user and token is not found, return 404 Status Code.\r\n            </p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The user Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The reset password model.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}/enable": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Enables user with the given Id.",
+        "description": "<p>Allowed roles: Admin</p>\r\n<p>\r\n            Set 'IsEnabled'=True.\r\n            </p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The user Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/user/{id}/disable": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Disables user with the given Id.",
+        "description": "<p>Allowed roles: Admin</p>\r\n<p>\r\n            Set 'IsEnabled'=False. Note that user cannot disabled himself.\r\n            </p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The user Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/user/{id}/password": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Updates user's password.",
+        "description": "<p>Allowed roles: Admin and Regular User can update self password</p>\r\n<p>\r\n            Validate existing user's password, then validate and store new password similar to Register endpoint.\r\n            </p>\r\n<p>\r\n            If existing password doesn't match, return 403 Status Code.\r\n            </p>",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user Id.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "description": "The user Id.",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The change password model.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email with password reset link was sent"
+          },
+          "400": {
+            "description": "BAD REQUEST - if there was problem with the request (e.g. malformed or some parameters are missing).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "NOT AUTHORIZED - if the request didn't bear authentication information or the authentication information is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN - if authentication was successful, but access is denied for the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - if some entity with the given Id was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL SERVER ERROR - if the request was properly formatted, but the operation failed on the server side.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorModel"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt_bearer": [ ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginModel": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The user's email.",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password.",
+            "example": "Secret!23"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Login credentials model."
+      },
+      "LoginResultModel": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "The JWT token."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Login result model."
+      },
+      "ApiErrorModel": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Gets or sets the message.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "An API error Model."
+      },
+      "NotamApiAccessItemType": {
+        "enum": [
+          "Sdk",
+          "Api"
+        ],
+        "type": "string",
+        "description": "The NOTAM API Access item type."
+      },
+      "NotamApiAccessItemModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The Id of the model.",
+            "format": "int64",
+            "example": 1
+          },
+          "itemType": {
+            "$ref": "#/components/schemas/NotamApiAccessItemType"
+          },
+          "version": {
+            "type": "string",
+            "description": "The API/SDK version.",
+            "nullable": true,
+            "example": "1.0.2"
+          },
+          "description": {
+            "type": "string",
+            "description": "The API/SDK description.",
+            "nullable": true,
+            "example": "Latest version of Swagger API in JSON format."
+          },
+          "changeLog": {
+            "type": "string",
+            "description": "The API/SDK Change Log.",
+            "nullable": true,
+            "example": "New API endpoints introduced to improve performance and usability."
+          },
+          "contentType": {
+            "type": "string",
+            "description": "The API/SDK file content type.",
+            "nullable": true,
+            "example": "text/json"
+          },
+          "contentLength": {
+            "type": "integer",
+            "description": "The API/SDK file content length in bytes.",
+            "format": "int32",
+            "example": 21288
+          },
+          "fileName": {
+            "type": "string",
+            "description": "The API/SDK file name.",
+            "nullable": true,
+            "example": "swagger_v1.0.2.json"
+          },
+          "createdDate": {
+            "type": "string",
+            "description": "The created date.",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "description": "The last updated date.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The NOTAM API Access item. It is either SKD or an API (swagger)."
+      },
+      "UpdateNotamApiAccessItemModel": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "The API/SDK version.",
+            "nullable": true,
+            "example": "1.0.3"
+          },
+          "description": {
+            "type": "string",
+            "description": "The API/SDK description.",
+            "nullable": true,
+            "example": "Latest updated version of Swagger API in JSON format."
+          },
+          "changeLog": {
+            "type": "string",
+            "description": "The API/SDK Change Log.",
+            "nullable": true,
+            "example": "Updated API endpoints introduced to improve performance and usability."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Update NOTAM API Access item model."
+      },
+      "SortOrder": {
+        "enum": [
+          "Asc",
+          "Desc"
+        ],
+        "type": "string",
+        "description": "The sort order for search operations."
+      },
+      "NotamApiAccessItemModelSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The total records count.",
+            "format": "int32",
+            "example": 124
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NotamApiAccessItemModel"
+            },
+            "description": "The items.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "An model that represents search result."
+      },
+      "CreateNotamApiAccessItemModel": {
+        "required": [
+          "changeLog",
+          "description",
+          "file",
+          "itemType",
+          "version"
+        ],
+        "type": "object",
+        "properties": {
+          "itemType": {
+            "$ref": "#/components/schemas/NotamApiAccessItemType"
+          },
+          "version": {
+            "type": "string",
+            "description": "The API/SDK version.",
+            "example": "1.0.2"
+          },
+          "description": {
+            "type": "string",
+            "description": "The API/SDK description.",
+            "example": "Latest version of Swagger API in JSON format."
+          },
+          "changeLog": {
+            "type": "string",
+            "description": "The API/SDK Change Log.",
+            "example": "New API endpoints introduced to improve performance and usability."
+          },
+          "file": {
+            "type": "string",
+            "description": "The API/SDK file.",
+            "format": "binary"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Create NOTAM API Access item model."
+      },
+      "NotamApiTokenModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The Id of the model.",
+            "format": "int64",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "The API token name.",
+            "nullable": true,
+            "example": "Development API token"
+          },
+          "key": {
+            "type": "string",
+            "description": "The API token key.",
+            "nullable": true
+          },
+          "isEnabledByUser": {
+            "type": "boolean",
+            "description": "The flag indicating whether Token is enabled by User.",
+            "example": true
+          },
+          "isEnabledByAdmin": {
+            "type": "boolean",
+            "description": "The flag indicating whether Token is enabled by Admin.",
+            "example": false
+          }
+        },
+        "additionalProperties": false,
+        "description": "The NOTAM API Token model."
+      },
+      "UpdateNotamApiTokenModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The updated API token name.",
+            "nullable": true,
+            "example": "Updated development API token"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The NOTAM API Token model."
+      },
+      "NotamApiTokenModelSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The total records count.",
+            "format": "int32",
+            "example": 124
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NotamApiTokenModel"
+            },
+            "description": "The items.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "An model that represents search result."
+      },
+      "CreateNotamApiTokenModel": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The API token name.",
+            "example": "Development API token"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Create NOTAM API Token model."
+      },
+      "UserCountPerCountryModel": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string",
+            "description": "The Country name.",
+            "nullable": true,
+            "example": "United States"
+          },
+          "userCount": {
+            "type": "integer",
+            "description": "The total users count for the given Country.",
+            "format": "int32",
+            "example": 15
+          }
+        },
+        "additionalProperties": false,
+        "description": "The total user count per Country."
+      },
+      "HourlyApiUsageModel": {
+        "type": "object",
+        "properties": {
+          "dateTimeHour": {
+            "type": "string",
+            "description": "The date time hour of the aggregated data.",
+            "format": "date-time",
+            "example": "2020-11-16T00:00:00.0000000+02:00"
+          },
+          "requestCount": {
+            "type": "integer",
+            "description": "The total API request count for the given hour.",
+            "format": "int32",
+            "example": 132
+          },
+          "returnedNotamCount": {
+            "type": "integer",
+            "description": "The total returned count of NOTAMs for the given hour.",
+            "format": "int32",
+            "example": 576
+          }
+        },
+        "additionalProperties": false,
+        "description": "The aggragated API usage info for one hour."
+      },
+      "StatisticsModel": {
+        "type": "object",
+        "properties": {
+          "totalUserCount": {
+            "type": "integer",
+            "description": "The total registered users count.",
+            "format": "int32",
+            "example": 256
+          },
+          "userCountPerCountry": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserCountPerCountryModel"
+            },
+            "description": "The total count of users per each Country.",
+            "nullable": true
+          },
+          "hourlyApiUsage": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HourlyApiUsageModel"
+            },
+            "description": "The aggregated hourly API usage statistics.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Application and API usage statistics."
+      },
+      "SupportFeedbackModel": {
+        "required": [
+          "comments"
+        ],
+        "type": "object",
+        "properties": {
+          "comments": {
+            "type": "string",
+            "description": "The feedback comments.",
+            "example": "Hello, my API token was disabled by admin. Can you tell the reason?"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Support Feedback model."
+      },
+      "UserModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The Id of the model.",
+            "format": "int64",
+            "example": 1
+          },
+          "fullName": {
+            "type": "string",
+            "description": "The full name of the user.",
+            "nullable": true,
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "The email of the user.",
+            "nullable": true,
+            "example": "john.doe@example.com"
+          },
+          "company": {
+            "type": "string",
+            "description": "The user's Company.",
+            "nullable": true,
+            "example": "Topcoder"
+          },
+          "address": {
+            "type": "string",
+            "description": "The user's Address.",
+            "nullable": true,
+            "example": "Main Street, 123"
+          },
+          "city": {
+            "type": "string",
+            "description": "The user's City.",
+            "nullable": true,
+            "example": "Ney York"
+          },
+          "state": {
+            "type": "string",
+            "description": "The user's State.",
+            "nullable": true,
+            "example": "NY"
+          },
+          "country": {
+            "type": "string",
+            "description": "The user's Country.",
+            "nullable": true,
+            "example": "United States"
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "The Zip Code.",
+            "nullable": true,
+            "example": "12345"
+          },
+          "primaryPhone": {
+            "type": "string",
+            "description": "The user's primary phone number.",
+            "nullable": true,
+            "example": "+1-541-754-3010"
+          },
+          "alternatePhone": {
+            "type": "string",
+            "description": "The user's alternate phone number.",
+            "nullable": true,
+            "example": "+1-754-541-1030"
+          },
+          "notamDataIntendedUsage": {
+            "type": "string",
+            "description": "The intended NOTAM data usage.",
+            "nullable": true,
+            "example": "Private pilot flights in US."
+          },
+          "isEmailConfirmed": {
+            "type": "boolean",
+            "description": "The flag incdicating whether user has confirmed his/her email.",
+            "example": true
+          },
+          "isApproved": {
+            "type": "boolean",
+            "description": "The flag incdicating whether user has been approved by Admin.",
+            "nullable": true,
+            "example": true
+          },
+          "isEnabled": {
+            "type": "boolean",
+            "description": "The flag incdicating whether user is enabled. When disabled - all user's API tokens will considered as disabled.",
+            "example": false
+          }
+        },
+        "additionalProperties": false,
+        "description": "The user model."
+      },
+      "UpdateUserModel": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "The full name of the user.",
+            "nullable": true,
+            "example": "John Doe"
+          },
+          "password": {
+            "type": "string",
+            "description": "The user password.",
+            "nullable": true,
+            "example": "Secret!23"
+          },
+          "company": {
+            "type": "string",
+            "description": "The user's Company.",
+            "nullable": true,
+            "example": "Topcoder"
+          },
+          "address": {
+            "type": "string",
+            "description": "The user's Address.",
+            "nullable": true,
+            "example": "Main Street, 123"
+          },
+          "city": {
+            "type": "string",
+            "description": "The user's City.",
+            "nullable": true,
+            "example": "Ney York"
+          },
+          "state": {
+            "type": "string",
+            "description": "The user's State.",
+            "nullable": true,
+            "example": "NY"
+          },
+          "country": {
+            "type": "string",
+            "description": "The user's Country.",
+            "nullable": true,
+            "example": "United States"
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "The Zip Code.",
+            "nullable": true,
+            "example": "12345"
+          },
+          "primaryPhone": {
+            "type": "string",
+            "description": "The user's primary phone number.",
+            "nullable": true,
+            "example": "+1-541-754-3010"
+          },
+          "alternatePhone": {
+            "type": "string",
+            "description": "The user's alternate phone number.",
+            "nullable": true,
+            "example": "+1-754-541-1030"
+          },
+          "notamDataIntendedUsage": {
+            "type": "string",
+            "description": "The intended NOTAM data usage.",
+            "nullable": true,
+            "example": "Private pilot flights in US."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Update user model."
+      },
+      "UserModelSearchResult": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "description": "The total records count.",
+            "format": "int32",
+            "example": 124
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserModel"
+            },
+            "description": "The items.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "An model that represents search result."
+      },
+      "RegisterUserModel": {
+        "required": [
+          "address",
+          "city",
+          "company",
+          "country",
+          "email",
+          "fullName",
+          "password",
+          "primaryPhone",
+          "reCaptchaResponse",
+          "state",
+          "zipCode"
+        ],
+        "type": "object",
+        "properties": {
+          "reCaptchaResponse": {
+            "type": "string",
+            "description": "The user response token provided by the reCAPTCHA client-side integration."
+          },
+          "fullName": {
+            "type": "string",
+            "description": "The full name of the user. (splitting into first/last name should be avoided when possible)",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "The email of the user.",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "The user password.",
+            "example": "Secret!23"
+          },
+          "company": {
+            "type": "string",
+            "description": "The user's Company.",
+            "example": "Topcoder"
+          },
+          "address": {
+            "type": "string",
+            "description": "The user's Address.",
+            "example": "Main Street, 123"
+          },
+          "city": {
+            "type": "string",
+            "description": "The user's City.",
+            "example": "Ney York"
+          },
+          "state": {
+            "type": "string",
+            "description": "The user's State.",
+            "example": "NY"
+          },
+          "country": {
+            "type": "string",
+            "description": "The user's Country.",
+            "example": "United States"
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "The Zip Code.",
+            "example": "12345"
+          },
+          "primaryPhone": {
+            "type": "string",
+            "description": "The user's primary phone number.",
+            "example": "+1-541-754-3010"
+          },
+          "alternatePhone": {
+            "type": "string",
+            "description": "The user's alternate phone number.",
+            "nullable": true,
+            "example": "+1-754-541-1030"
+          },
+          "notamDataIntendedUsage": {
+            "type": "string",
+            "description": "The intended NOTAM data usage.",
+            "nullable": true,
+            "example": "Private pilot flights in US."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Register Regular user model."
+      },
+      "RegisterAdminModel": {
+        "required": [
+          "address",
+          "city",
+          "company",
+          "country",
+          "email",
+          "fullName",
+          "password",
+          "primaryPhone",
+          "state",
+          "zipCode"
+        ],
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "The full name of the user. (splitting into first/last name should be avoided when possible)",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "The email of the user.",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "The user password.",
+            "example": "Secret!23"
+          },
+          "company": {
+            "type": "string",
+            "description": "The user's Company.",
+            "example": "Topcoder"
+          },
+          "address": {
+            "type": "string",
+            "description": "The user's Address.",
+            "example": "Main Street, 123"
+          },
+          "city": {
+            "type": "string",
+            "description": "The user's City.",
+            "example": "Ney York"
+          },
+          "state": {
+            "type": "string",
+            "description": "The user's State.",
+            "example": "NY"
+          },
+          "country": {
+            "type": "string",
+            "description": "The user's Country.",
+            "example": "United States"
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "The Zip Code.",
+            "example": "12345"
+          },
+          "primaryPhone": {
+            "type": "string",
+            "description": "The user's primary phone number.",
+            "example": "+1-541-754-3010"
+          },
+          "alternatePhone": {
+            "type": "string",
+            "description": "The user's alternate phone number.",
+            "nullable": true,
+            "example": "+1-754-541-1030"
+          },
+          "notamDataIntendedUsage": {
+            "type": "string",
+            "description": "The intended NOTAM data usage.",
+            "nullable": true,
+            "example": "Private pilot flights in US."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Register Admin user model."
+      },
+      "CreatedItemModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The Id of created item. For user registration it will be the Id of new user.",
+            "format": "int64",
+            "example": 2
+          }
+        },
+        "additionalProperties": false,
+        "description": "This model contains response details for Create operations, including user Register operation."
+      },
+      "ForgotPasswordModel": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email of the user.",
+            "example": "john.doe@example.com"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Forgot Password model."
+      },
+      "ResetPasswordModel": {
+        "required": [
+          "newPassword",
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "The email of the user.",
+            "example": "john.doe@example.com"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "The new password.",
+            "example": "Secret!234"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Reset Password model."
+      },
+      "ChangePasswordModel": {
+        "required": [
+          "currentPassword",
+          "newPassword"
+        ],
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "type": "string",
+            "description": "The user's current password.",
+            "example": "Secret!23"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "The user's new password.",
+            "example": "Secret!234"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Change Password model."
+      }
+    },
+    "securitySchemes": {
+      "jwt_bearer": {
+        "type": "http",
+        "description": "Authentication using JWT Token in header.",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
