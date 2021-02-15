@@ -1,8 +1,8 @@
 package gov.faa.notam.developerportal.model.api;
 
-import java.util.List;
-
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * Generic search response.

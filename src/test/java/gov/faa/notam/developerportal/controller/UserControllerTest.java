@@ -1,5 +1,8 @@
 package gov.faa.notam.developerportal.controller;
 
+import gov.faa.notam.developerportal.exception.ApiException;
+import gov.faa.notam.developerportal.model.api.*;
+import gov.faa.notam.developerportal.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,16 +11,6 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.ChangePasswordRequest;
-import gov.faa.notam.developerportal.model.api.ForgotPasswordRequest;
-import gov.faa.notam.developerportal.model.api.RegisterAdminRequest;
-import gov.faa.notam.developerportal.model.api.RegisterUserRequest;
-import gov.faa.notam.developerportal.model.api.ResetPasswordRequest;
-import gov.faa.notam.developerportal.model.api.SearchUserRequest;
-import gov.faa.notam.developerportal.model.api.UpdateUserRequest;
-import gov.faa.notam.developerportal.service.UserService;
 
 /**
  * Test class for UserController 

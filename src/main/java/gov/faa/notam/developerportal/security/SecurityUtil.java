@@ -1,12 +1,12 @@
 package gov.faa.notam.developerportal.security;
 
-import java.util.Optional;
-
 import gov.faa.notam.developerportal.model.entity.UserRole;
 import io.jsonwebtoken.Claims;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.Optional;
 
 public final class SecurityUtil {
     private SecurityUtil() {

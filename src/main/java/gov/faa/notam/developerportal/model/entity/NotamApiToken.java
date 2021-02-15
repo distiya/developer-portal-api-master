@@ -1,18 +1,11 @@
 package gov.faa.notam.developerportal.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
+import gov.faa.notam.developerportal.model.api.NotamApiTokenStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Where;
+
+import javax.persistence.*;
 
 @Data
 @EqualsAndHashCode(callSuper = false, of = "id")
@@ -37,6 +30,10 @@ public class NotamApiToken extends AbstractAuditEntity {
 
     @Column(name = "key")
     private String key;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 45)
+    private NotamApiTokenStatus status;
 
     @Column(name = "is_enabled_by_user")
     private boolean enabledByUser;

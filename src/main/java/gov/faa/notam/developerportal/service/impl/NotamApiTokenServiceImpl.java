@@ -1,18 +1,8 @@
 package gov.faa.notam.developerportal.service.impl;
 
-import java.nio.ByteBuffer;
-import java.util.Base64;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
 import gov.faa.notam.developerportal.configuration.PaginationConfig;
 import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.CreateNotamApiTokenRequest;
-import gov.faa.notam.developerportal.model.api.NotamApiTokenModel;
-import gov.faa.notam.developerportal.model.api.SearchNotamApiTokenRequest;
-import gov.faa.notam.developerportal.model.api.SearchResponse;
-import gov.faa.notam.developerportal.model.api.UpdateNotamApiTokenRequest;
+import gov.faa.notam.developerportal.model.api.*;
 import gov.faa.notam.developerportal.model.entity.NotamApiToken;
 import gov.faa.notam.developerportal.model.entity.User;
 import gov.faa.notam.developerportal.model.entity.UserRole;
@@ -25,6 +15,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.nio.ByteBuffer;
+import java.util.Base64;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +51,7 @@ public class NotamApiTokenServiceImpl implements NotamApiTokenService {
         token.setDeleted(false);
         token.setEnabledByAdmin(true);
         token.setEnabledByUser(true);
+        token.setStatus(NotamApiTokenStatus.active);
 
         token = notamApiTokenRepository.save(token);
 
@@ -77,7 +74,12 @@ public class NotamApiTokenServiceImpl implements NotamApiTokenService {
     @Override
     public void updateToken(Long id, UpdateNotamApiTokenRequest request) throws ApiException {
         NotamApiToken token = getTokenById(id);
-        token.setName(request.getName());
+        if(request.getName() != null && Boolean.FALSE.equals(request.getName().isBlank())){
+            token.setName(request.getName());
+        }
+        if(request.getStatus() != null){
+            token.setStatus(request.getStatus());
+        }
         notamApiTokenRepository.save(token);
     }
 

@@ -1,7 +1,5 @@
 package gov.faa.notam.developerportal.configuration;
 
-import java.util.Optional;
-
 import gov.faa.notam.developerportal.model.api.AbstractSearchRequest;
 import gov.faa.notam.developerportal.model.api.SortOrder;
 import lombok.Getter;
@@ -9,6 +7,8 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * Pagination configuration component.

@@ -1,10 +1,8 @@
 package gov.faa.notam.developerportal.service.impl.test;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
-
+import gov.faa.notam.developerportal.model.api.SearchNotamApiTokenRequest;
+import gov.faa.notam.developerportal.model.entity.NotamApiToken;
+import gov.faa.notam.developerportal.service.impl.NotamApiTokenSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,9 +13,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import gov.faa.notam.developerportal.model.api.SearchNotamApiTokenRequest;
-import gov.faa.notam.developerportal.model.entity.NotamApiToken;
-import gov.faa.notam.developerportal.service.impl.NotamApiTokenSpecification;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 /**
  * Test class for NotamApiTokenSpecification

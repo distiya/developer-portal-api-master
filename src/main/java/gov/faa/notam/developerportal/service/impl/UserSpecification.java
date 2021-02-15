@@ -1,16 +1,16 @@
 package gov.faa.notam.developerportal.service.impl;
 
+import gov.faa.notam.developerportal.model.api.SearchUserRequest;
+import gov.faa.notam.developerportal.model.entity.User;
+import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-
-import gov.faa.notam.developerportal.model.api.SearchUserRequest;
-import gov.faa.notam.developerportal.model.entity.User;
-import lombok.AllArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 
 /**
  * User specification for searching users using the search user request.

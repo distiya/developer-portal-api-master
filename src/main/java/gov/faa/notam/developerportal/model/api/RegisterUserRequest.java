@@ -1,9 +1,9 @@
 package gov.faa.notam.developerportal.model.api;
 
-import javax.validation.constraints.NotBlank;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * Request to register a new regular user. Includes additional reCAPTCHA response.

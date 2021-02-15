@@ -1,9 +1,16 @@
 package gov.faa.notam.developerportal.service.impl.test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import gov.faa.notam.developerportal.configuration.PaginationConfig;
+import gov.faa.notam.developerportal.exception.ApiException;
+import gov.faa.notam.developerportal.model.api.*;
+import gov.faa.notam.developerportal.model.entity.NotamApiToken;
+import gov.faa.notam.developerportal.model.entity.User;
+import gov.faa.notam.developerportal.model.entity.UserRole;
+import gov.faa.notam.developerportal.repository.NotamApiTokenRepository;
+import gov.faa.notam.developerportal.repository.UserRepository;
+import gov.faa.notam.developerportal.security.SecurityUtil;
+import gov.faa.notam.developerportal.service.impl.NotamApiTokenServiceImpl;
+import gov.faa.notam.developerportal.service.impl.NotamApiTokenSpecification;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,22 +28,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import gov.faa.notam.developerportal.configuration.PaginationConfig;
-import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.CreateNotamApiTokenRequest;
-import gov.faa.notam.developerportal.model.api.NotamApiTokenModel;
-import gov.faa.notam.developerportal.model.api.SearchNotamApiTokenRequest;
-import gov.faa.notam.developerportal.model.api.SearchResponse;
-import gov.faa.notam.developerportal.model.api.SortOrder;
-import gov.faa.notam.developerportal.model.api.UpdateNotamApiTokenRequest;
-import gov.faa.notam.developerportal.model.entity.NotamApiToken;
-import gov.faa.notam.developerportal.model.entity.User;
-import gov.faa.notam.developerportal.model.entity.UserRole;
-import gov.faa.notam.developerportal.repository.NotamApiTokenRepository;
-import gov.faa.notam.developerportal.repository.UserRepository;
-import gov.faa.notam.developerportal.security.SecurityUtil;
-import gov.faa.notam.developerportal.service.impl.NotamApiTokenServiceImpl;
-import gov.faa.notam.developerportal.service.impl.NotamApiTokenSpecification;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Test class for NotamApiTokenServiceImpl

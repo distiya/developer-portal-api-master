@@ -1,10 +1,17 @@
 package gov.faa.notam.developerportal.service.impl.test;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import gov.faa.notam.developerportal.configuration.PaginationConfig;
+import gov.faa.notam.developerportal.exception.ApiException;
+import gov.faa.notam.developerportal.model.api.*;
+import gov.faa.notam.developerportal.model.entity.User;
+import gov.faa.notam.developerportal.model.entity.UserRole;
+import gov.faa.notam.developerportal.repository.UserRepository;
+import gov.faa.notam.developerportal.security.PasswordPolicy;
+import gov.faa.notam.developerportal.security.ReCaptcha;
+import gov.faa.notam.developerportal.security.SecurityUtil;
+import gov.faa.notam.developerportal.service.EmailService;
+import gov.faa.notam.developerportal.service.impl.UserServiceImpl;
+import gov.faa.notam.developerportal.service.impl.UserSpecification;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,27 +29,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import gov.faa.notam.developerportal.configuration.PaginationConfig;
-import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.ChangePasswordRequest;
-import gov.faa.notam.developerportal.model.api.ForgotPasswordRequest;
-import gov.faa.notam.developerportal.model.api.RegisterAdminRequest;
-import gov.faa.notam.developerportal.model.api.RegisterUserRequest;
-import gov.faa.notam.developerportal.model.api.ResetPasswordRequest;
-import gov.faa.notam.developerportal.model.api.SearchResponse;
-import gov.faa.notam.developerportal.model.api.SearchUserRequest;
-import gov.faa.notam.developerportal.model.api.SortOrder;
-import gov.faa.notam.developerportal.model.api.UpdateUserRequest;
-import gov.faa.notam.developerportal.model.api.UserModel;
-import gov.faa.notam.developerportal.model.entity.User;
-import gov.faa.notam.developerportal.model.entity.UserRole;
-import gov.faa.notam.developerportal.repository.UserRepository;
-import gov.faa.notam.developerportal.security.PasswordPolicy;
-import gov.faa.notam.developerportal.security.ReCaptcha;
-import gov.faa.notam.developerportal.security.SecurityUtil;
-import gov.faa.notam.developerportal.service.EmailService;
-import gov.faa.notam.developerportal.service.impl.UserServiceImpl;
-import gov.faa.notam.developerportal.service.impl.UserSpecification;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Test class for UserServiceImpl

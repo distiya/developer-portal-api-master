@@ -1,7 +1,5 @@
 package gov.faa.notam.developerportal.service.impl;
 
-import java.util.Optional;
-
 import gov.faa.notam.developerportal.exception.ApiException;
 import gov.faa.notam.developerportal.model.api.LoginRequest;
 import gov.faa.notam.developerportal.model.api.LoginResponse;
@@ -13,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * Implementation of the authentication service.

@@ -1,10 +1,8 @@
 package gov.faa.notam.developerportal.security.test;
 
-import java.time.Duration;
-import java.time.Instant;
-
-import javax.servlet.http.HttpServletRequest;
-
+import gov.faa.notam.developerportal.model.entity.User;
+import gov.faa.notam.developerportal.model.entity.UserRole;
+import gov.faa.notam.developerportal.security.JwtTokenProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,9 +16,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import gov.faa.notam.developerportal.model.entity.User;
-import gov.faa.notam.developerportal.model.entity.UserRole;
-import gov.faa.notam.developerportal.security.JwtTokenProvider;
+import javax.servlet.http.HttpServletRequest;
+import java.time.Duration;
+import java.time.Instant;
 
 /**
  * Test class for JwtTokenProvider

@@ -1,23 +1,8 @@
 package gov.faa.notam.developerportal.service.impl;
 
-import java.security.SecureRandom;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import gov.faa.notam.developerportal.configuration.PaginationConfig;
 import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.AbstractRegisterRequest;
-import gov.faa.notam.developerportal.model.api.ChangePasswordRequest;
-import gov.faa.notam.developerportal.model.api.ForgotPasswordRequest;
-import gov.faa.notam.developerportal.model.api.RegisterAdminRequest;
-import gov.faa.notam.developerportal.model.api.RegisterUserRequest;
-import gov.faa.notam.developerportal.model.api.ResetPasswordRequest;
-import gov.faa.notam.developerportal.model.api.SearchResponse;
-import gov.faa.notam.developerportal.model.api.SearchUserRequest;
-import gov.faa.notam.developerportal.model.api.UpdateUserRequest;
-import gov.faa.notam.developerportal.model.api.UserModel;
+import gov.faa.notam.developerportal.model.api.*;
 import gov.faa.notam.developerportal.model.entity.User;
 import gov.faa.notam.developerportal.model.entity.UserRole;
 import gov.faa.notam.developerportal.repository.UserRepository;
@@ -34,6 +19,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Date;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Setter

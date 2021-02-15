@@ -1,8 +1,8 @@
 package gov.faa.notam.developerportal.model.api;
 
-import javax.validation.constraints.NotBlank;
-
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * Request to send feedback.

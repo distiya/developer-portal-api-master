@@ -1,7 +1,9 @@
 package gov.faa.notam.developerportal.service.impl.test;
 
-import java.util.Optional;
-
+import gov.faa.notam.developerportal.exception.ApiException;
+import gov.faa.notam.developerportal.security.SecurityUtil;
+import gov.faa.notam.developerportal.service.EmailService;
+import gov.faa.notam.developerportal.service.impl.FeedbackServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,10 +15,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.security.SecurityUtil;
-import gov.faa.notam.developerportal.service.EmailService;
-import gov.faa.notam.developerportal.service.impl.FeedbackServiceImpl;
+import java.util.Optional;
 
 /**
  * Test class for FeedbackServiceImpl

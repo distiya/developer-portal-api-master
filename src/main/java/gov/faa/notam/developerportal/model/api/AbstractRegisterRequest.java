@@ -1,9 +1,9 @@
 package gov.faa.notam.developerportal.model.api;
 
+import lombok.Data;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import lombok.Data;
 
 /**
  * User register request. Common fields for both admin and regular user.

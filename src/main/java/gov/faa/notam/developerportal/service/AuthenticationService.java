@@ -1,10 +1,10 @@
 package gov.faa.notam.developerportal.service;
 
-import javax.transaction.Transactional;
-
 import gov.faa.notam.developerportal.exception.ApiException;
 import gov.faa.notam.developerportal.model.api.LoginRequest;
 import gov.faa.notam.developerportal.model.api.LoginResponse;
+
+import javax.transaction.Transactional;
 
 /**
  * The authentication service responsible for authenticate a user and issue access tokens.

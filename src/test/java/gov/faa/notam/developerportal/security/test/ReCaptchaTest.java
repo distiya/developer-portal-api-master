@@ -1,5 +1,6 @@
 package gov.faa.notam.developerportal.security.test;
 
+import gov.faa.notam.developerportal.security.ReCaptcha;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,8 +10,6 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
-
-import gov.faa.notam.developerportal.security.ReCaptcha;
 
 /**
  * Test class for ReCaptcha

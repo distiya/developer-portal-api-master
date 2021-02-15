@@ -1,32 +1,22 @@
 package gov.faa.notam.developerportal.security;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.passay.AllowedCharacterRule;
-import org.passay.AllowedRegexRule;
-import org.passay.DictionaryRule;
-import org.passay.LengthRule;
-import org.passay.MatchBehavior;
-import org.passay.PasswordData;
-import org.passay.PasswordValidator;
-import org.passay.Rule;
-import org.passay.RuleResult;
-import org.passay.UsernameRule;
-import org.passay.WhitespaceRule;
+import org.passay.*;
 import org.passay.dictionary.ArrayWordList;
 import org.passay.dictionary.WordListDictionary;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.yaml.snakeyaml.Yaml;
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Validate passwords according to configured password rules.

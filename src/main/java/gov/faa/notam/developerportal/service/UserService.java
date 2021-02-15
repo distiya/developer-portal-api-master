@@ -1,18 +1,10 @@
 package gov.faa.notam.developerportal.service;
 
-import javax.transaction.Transactional;
-
 import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.ChangePasswordRequest;
-import gov.faa.notam.developerportal.model.api.ForgotPasswordRequest;
-import gov.faa.notam.developerportal.model.api.RegisterAdminRequest;
-import gov.faa.notam.developerportal.model.api.RegisterUserRequest;
-import gov.faa.notam.developerportal.model.api.ResetPasswordRequest;
-import gov.faa.notam.developerportal.model.api.SearchResponse;
-import gov.faa.notam.developerportal.model.api.SearchUserRequest;
-import gov.faa.notam.developerportal.model.api.UpdateUserRequest;
-import gov.faa.notam.developerportal.model.api.UserModel;
+import gov.faa.notam.developerportal.model.api.*;
 import org.springframework.security.access.annotation.Secured;
+
+import javax.transaction.Transactional;
 
 /**
  * User service for user registration and management.

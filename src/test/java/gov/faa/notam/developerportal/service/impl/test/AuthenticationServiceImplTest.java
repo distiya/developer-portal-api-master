@@ -1,7 +1,12 @@
 package gov.faa.notam.developerportal.service.impl.test;
 
-import java.util.Optional;
-
+import gov.faa.notam.developerportal.exception.ApiException;
+import gov.faa.notam.developerportal.model.api.LoginRequest;
+import gov.faa.notam.developerportal.model.api.LoginResponse;
+import gov.faa.notam.developerportal.model.entity.User;
+import gov.faa.notam.developerportal.repository.UserRepository;
+import gov.faa.notam.developerportal.security.JwtTokenProvider;
+import gov.faa.notam.developerportal.service.impl.AuthenticationServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,13 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.LoginRequest;
-import gov.faa.notam.developerportal.model.api.LoginResponse;
-import gov.faa.notam.developerportal.model.entity.User;
-import gov.faa.notam.developerportal.repository.UserRepository;
-import gov.faa.notam.developerportal.security.JwtTokenProvider;
-import gov.faa.notam.developerportal.service.impl.AuthenticationServiceImpl;
+import java.util.Optional;
 
 /**
  * Test class for AuthenticationServiceImpl

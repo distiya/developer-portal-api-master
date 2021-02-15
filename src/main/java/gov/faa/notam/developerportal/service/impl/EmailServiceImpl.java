@@ -1,8 +1,5 @@
 package gov.faa.notam.developerportal.service.impl;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
 import gov.faa.notam.developerportal.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +9,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 /**
  * Implementation of the email service.

@@ -1,7 +1,7 @@
 package gov.faa.notam.developerportal.model.api;
 
-import gov.faa.notam.developerportal.model.entity.UserRole;
 import gov.faa.notam.developerportal.model.entity.User;
+import gov.faa.notam.developerportal.model.entity.UserRole;
 import lombok.Data;
 
 /**

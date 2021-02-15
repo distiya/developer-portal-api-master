@@ -1,5 +1,8 @@
 package gov.faa.notam.developerportal.controller;
 
+import gov.faa.notam.developerportal.exception.ApiException;
+import gov.faa.notam.developerportal.model.api.SupportFeedbackRequest;
+import gov.faa.notam.developerportal.service.FeedbackService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,10 +11,6 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.SupportFeedbackRequest;
-import gov.faa.notam.developerportal.service.FeedbackService;
 
 /**
  * Test class for FeedbackController

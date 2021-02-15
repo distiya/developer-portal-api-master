@@ -1,7 +1,5 @@
 package gov.faa.notam.developerportal.service.impl;
 
-import java.util.Optional;
-
 import gov.faa.notam.developerportal.exception.ApiException;
 import gov.faa.notam.developerportal.security.SecurityUtil;
 import gov.faa.notam.developerportal.service.EmailService;
@@ -9,6 +7,8 @@ import gov.faa.notam.developerportal.service.FeedbackService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

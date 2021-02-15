@@ -1,5 +1,7 @@
 package gov.faa.notam.developerportal.security.test;
 
+import gov.faa.notam.developerportal.security.JwtConfigurer;
+import gov.faa.notam.developerportal.security.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,9 +12,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-
-import gov.faa.notam.developerportal.security.JwtConfigurer;
-import gov.faa.notam.developerportal.security.JwtTokenProvider;
 
 /**
  * Test call for JwtConfigurer

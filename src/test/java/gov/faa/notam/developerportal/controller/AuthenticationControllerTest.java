@@ -1,5 +1,9 @@
 package gov.faa.notam.developerportal.controller;
 
+import gov.faa.notam.developerportal.exception.ApiException;
+import gov.faa.notam.developerportal.model.api.LoginRequest;
+import gov.faa.notam.developerportal.model.api.LoginResponse;
+import gov.faa.notam.developerportal.service.AuthenticationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,11 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.LoginRequest;
-import gov.faa.notam.developerportal.model.api.LoginResponse;
-import gov.faa.notam.developerportal.service.AuthenticationService;
 
 /**
  * Test class for AuthenticationController

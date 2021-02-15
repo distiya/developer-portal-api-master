@@ -3,6 +3,8 @@ package gov.faa.notam.developerportal.model.api;
 import gov.faa.notam.developerportal.model.entity.NotamApiToken;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * Notam API token returned to the frontend.
  */
@@ -24,6 +26,11 @@ public class NotamApiTokenModel {
     private String key;
 
     /**
+     * The status of the token
+     */
+    private NotamApiTokenStatus status;
+
+    /**
      * Enabled by the owner.
      */
     private Boolean isEnabledByUser;
@@ -32,6 +39,16 @@ public class NotamApiTokenModel {
      * Enabled by admin.
      */
     private Boolean isEnabledByAdmin;
+
+    /**
+     * The created date of the token
+     */
+    private Date createdDate;
+
+    /**
+     * The activity usage of last twenty four hours
+     */
+    private LastTwentyFourHoursActivityModel last24hoursActivityUsage;
 
     /**
      * Construct from a token entity.
@@ -44,5 +61,7 @@ public class NotamApiTokenModel {
         setKey(token.getKey());
         setIsEnabledByAdmin(token.isEnabledByAdmin());
         setIsEnabledByUser(token.isEnabledByUser());
+        setCreatedDate(token.getCreatedAt());
+        setStatus(token.getStatus());
     }
 }

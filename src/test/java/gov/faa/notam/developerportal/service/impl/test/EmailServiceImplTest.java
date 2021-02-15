@@ -1,10 +1,6 @@
 package gov.faa.notam.developerportal.service.impl.test;
 
-import java.util.Properties;
-
-import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
-
+import gov.faa.notam.developerportal.service.impl.EmailServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +15,9 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import gov.faa.notam.developerportal.service.impl.EmailServiceImpl;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 /**
  * Test class for EmailServiceImpl

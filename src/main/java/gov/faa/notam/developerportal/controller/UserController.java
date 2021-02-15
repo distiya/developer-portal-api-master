@@ -1,31 +1,15 @@
 package gov.faa.notam.developerportal.controller;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.ChangePasswordRequest;
-import gov.faa.notam.developerportal.model.api.ForgotPasswordRequest;
-import gov.faa.notam.developerportal.model.api.RegisterAdminRequest;
-import gov.faa.notam.developerportal.model.api.RegisterUserRequest;
-import gov.faa.notam.developerportal.model.api.ResetPasswordRequest;
-import gov.faa.notam.developerportal.model.api.SearchResponse;
-import gov.faa.notam.developerportal.model.api.SearchUserRequest;
-import gov.faa.notam.developerportal.model.api.UpdateUserRequest;
-import gov.faa.notam.developerportal.model.api.UserModel;
+import gov.faa.notam.developerportal.model.api.*;
 import gov.faa.notam.developerportal.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * User management and security endpoints.

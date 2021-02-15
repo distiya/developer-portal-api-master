@@ -1,24 +1,13 @@
 package gov.faa.notam.developerportal.controller;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.CreateNotamApiTokenRequest;
-import gov.faa.notam.developerportal.model.api.NotamApiTokenModel;
-import gov.faa.notam.developerportal.model.api.SearchNotamApiTokenRequest;
-import gov.faa.notam.developerportal.model.api.SearchResponse;
-import gov.faa.notam.developerportal.model.api.UpdateNotamApiTokenRequest;
+import gov.faa.notam.developerportal.model.api.*;
 import gov.faa.notam.developerportal.service.NotamApiTokenService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * Notam API token endpoints.

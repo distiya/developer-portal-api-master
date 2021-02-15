@@ -8,4 +8,9 @@ import lombok.Data;
 @Data
 public class UpdateNotamApiTokenRequest {
     private String name;
+
+    /**
+     * The status of the token
+     */
+    private NotamApiTokenStatus status;
 }

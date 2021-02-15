@@ -1,16 +1,16 @@
 package gov.faa.notam.developerportal.service.impl;
 
+import gov.faa.notam.developerportal.model.api.SearchNotamApiTokenRequest;
+import gov.faa.notam.developerportal.model.entity.NotamApiToken;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-
-import gov.faa.notam.developerportal.model.api.SearchNotamApiTokenRequest;
-import gov.faa.notam.developerportal.model.entity.NotamApiToken;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 
 /**
  * JPA specification for searching notam API token.

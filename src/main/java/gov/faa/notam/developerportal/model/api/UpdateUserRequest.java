@@ -1,8 +1,8 @@
 package gov.faa.notam.developerportal.model.api;
 
-import javax.validation.constraints.Pattern;
-
 import lombok.Data;
+
+import javax.validation.constraints.Pattern;
 
 /**
  * Request to update a user.
