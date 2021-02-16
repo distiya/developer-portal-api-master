@@ -3,6 +3,7 @@ package gov.faa.notam.developerportal.service;
 import gov.faa.notam.developerportal.exception.ApiException;
 import gov.faa.notam.developerportal.model.api.CreateNotamAPIAccessItemRequest;
 import gov.faa.notam.developerportal.model.api.NotamApiAccessItemModel;
+import gov.faa.notam.developerportal.model.api.UpdateNotamApiAccessItemModel;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
@@ -40,6 +41,16 @@ public interface NotamApiAccessItemService {
      * @throws ApiException - if any error occurs.
      */
     NotamApiAccessItemModel getAccessItem(Long id) throws ApiException;
+
+    /**
+     * Update access item
+     *
+     * @param id the record id of the access item
+     * @param request the object holding to be updated values
+     * @return the access item
+     * @throws ApiException - if any error occurs.
+     */
+    void updateAccessItem(Long id, UpdateNotamApiAccessItemModel request) throws ApiException;
 
 
 }

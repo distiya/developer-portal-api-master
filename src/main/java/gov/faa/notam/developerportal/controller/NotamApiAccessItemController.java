@@ -3,6 +3,7 @@ package gov.faa.notam.developerportal.controller;
 import gov.faa.notam.developerportal.exception.ApiException;
 import gov.faa.notam.developerportal.model.api.CreateNotamAPIAccessItemRequest;
 import gov.faa.notam.developerportal.model.api.NotamApiAccessItemModel;
+import gov.faa.notam.developerportal.model.api.UpdateNotamApiAccessItemModel;
 import gov.faa.notam.developerportal.service.NotamApiAccessItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,11 @@ public class NotamApiAccessItemController {
     @GetMapping(path = "/notamApiAccessItem/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public NotamApiAccessItemModel getNotamApiAccessItem(@PathVariable("id") Long id) throws ApiException{
         return apiAccessItemService.getAccessItem(id);
+    }
+
+    @PatchMapping(path = "/notamApiAccessItem/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateNotamApiAccessItem(@PathVariable("id") Long id, @RequestBody UpdateNotamApiAccessItemModel request) throws ApiException{
+        apiAccessItemService.updateAccessItem(id,request);
     }
 
 }
