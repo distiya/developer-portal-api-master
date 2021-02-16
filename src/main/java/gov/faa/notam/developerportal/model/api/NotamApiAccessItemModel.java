@@ -58,6 +58,19 @@ public class NotamApiAccessItemModel {
      */
     private Date updatedDate;
 
+    public NotamApiAccessItemModel(Long id, NotamApiAccessItemType type, String version, String description, String changeLog, String contentType, Integer contentLength, String fileName, Date createdDate, Date updatedDate){
+        setId(id);
+        setItemType(type);
+        setVersion(version);
+        setDescription(description);
+        setChangeLog(changeLog);
+        setContentType(contentType);
+        setContentLength(contentLength);
+        setFileName(fileName);
+        setCreatedDate(createdDate);
+        setUpdatedDate(updatedDate);
+    }
+
     public NotamApiAccessItemModel(NotamApiAccessItem notamApiAccessItem){
         setId(notamApiAccessItem.getId());
         setItemType(notamApiAccessItem.getType());

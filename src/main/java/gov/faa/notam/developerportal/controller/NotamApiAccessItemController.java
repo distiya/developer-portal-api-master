@@ -1,9 +1,7 @@
 package gov.faa.notam.developerportal.controller;
 
 import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.CreateNotamAPIAccessItemRequest;
-import gov.faa.notam.developerportal.model.api.NotamApiAccessItemModel;
-import gov.faa.notam.developerportal.model.api.UpdateNotamApiAccessItemModel;
+import gov.faa.notam.developerportal.model.api.*;
 import gov.faa.notam.developerportal.service.NotamApiAccessItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +50,11 @@ public class NotamApiAccessItemController {
     @GetMapping(path = "/notamApiAccessItem/{id}/file",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public byte[] getNotamApiAccessItemFile(@PathVariable("id") Long id) throws ApiException{
         return apiAccessItemService.getAccessItemFile(id);
+    }
+
+    @GetMapping(path = "/notamApiAccessItem",produces = MediaType.APPLICATION_JSON_VALUE)
+    public NotamApiAccessItemModelSearchResult searchNotamApiAccessItem(SearchNotamApiAccessItemRequest request) throws ApiException{
+        return apiAccessItemService.searchAccessItem(request);
     }
 
 }

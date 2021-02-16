@@ -1,9 +1,7 @@
 package gov.faa.notam.developerportal.service;
 
 import gov.faa.notam.developerportal.exception.ApiException;
-import gov.faa.notam.developerportal.model.api.CreateNotamAPIAccessItemRequest;
-import gov.faa.notam.developerportal.model.api.NotamApiAccessItemModel;
-import gov.faa.notam.developerportal.model.api.UpdateNotamApiAccessItemModel;
+import gov.faa.notam.developerportal.model.api.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
@@ -60,6 +58,15 @@ public interface NotamApiAccessItemService {
      * @throws ApiException - if any error occurs.
      */
     void updateAccessItem(Long id, UpdateNotamApiAccessItemModel request) throws ApiException;
+
+    /**
+     * Update access item
+     *
+     * @param request the object holding query parameters
+     * @return the search result of access item
+     * @throws ApiException - if any error occurs.
+     */
+    NotamApiAccessItemModelSearchResult searchAccessItem(SearchNotamApiAccessItemRequest request) throws ApiException;
 
 
 }
