@@ -12,10 +12,10 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 public class LoginRequest {
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email should not be blank")
+    @Email(message = "Invalid email")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password should not be blank")
     private String password;
 }

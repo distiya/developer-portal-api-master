@@ -4,6 +4,8 @@ import gov.faa.notam.developerportal.model.entity.User;
 import gov.faa.notam.developerportal.model.entity.UserRole;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * User data returned to the client.
  */
@@ -40,6 +42,18 @@ public class UserModel {
     private Boolean isApproved;
 
     private Boolean isEnabled;
+
+    /**
+     * The created date
+     */
+    private Date createdDate;
+
+    /**
+     * The verification link
+     */
+    private String verificationLink;
+
+    private LastTwentyFourHoursActivityModel last24hoursActivityUsage;
 
     /**
      * Construct from a user entity.

@@ -19,6 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.validation.Validator;
 import java.util.Optional;
 
 /**
@@ -55,6 +56,12 @@ public class AuthenticationServiceImplTest
 	 */
 	@Mock
 	private  JwtTokenProvider jwtTokenProvider;
+
+	/**
+	 * Mocking Bean Validator
+	 */
+	@Mock
+	private Validator validator;
 	
 	/**
 	 * Initialize AuthenticationServiceImpl
@@ -62,7 +69,7 @@ public class AuthenticationServiceImplTest
 	@BeforeEach
     void setupEach()
 	{
-		authenticationServiceImpl = new AuthenticationServiceImpl(userRepository, passwordEncoder, jwtTokenProvider);
+		authenticationServiceImpl = new AuthenticationServiceImpl(userRepository, passwordEncoder, jwtTokenProvider, validator);
 	}
 	
 	/**

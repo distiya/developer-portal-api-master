@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-
 /**
  * The authentication endpoint.
  * <p>
@@ -27,7 +25,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping(value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LoginResponse login(@Valid @RequestBody LoginRequest request) throws ApiException {
+    public LoginResponse login(@RequestBody LoginRequest request) throws ApiException {
         return authenticationService.login(request);
     }
 }
