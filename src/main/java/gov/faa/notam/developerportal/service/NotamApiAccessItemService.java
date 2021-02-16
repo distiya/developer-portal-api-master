@@ -43,6 +43,15 @@ public interface NotamApiAccessItemService {
     NotamApiAccessItemModel getAccessItem(Long id) throws ApiException;
 
     /**
+     * Get access item file
+     *
+     * @param id the record id of the access item
+     * @return the access item file
+     * @throws ApiException - if any error occurs.
+     */
+    byte[] getAccessItemFile(Long id) throws ApiException;
+
+    /**
      * Update access item
      *
      * @param id the record id of the access item

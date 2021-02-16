@@ -49,4 +49,9 @@ public class NotamApiAccessItemController {
         apiAccessItemService.updateAccessItem(id,request);
     }
 
+    @GetMapping(path = "/notamApiAccessItem/{id}/file",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public byte[] getNotamApiAccessItemFile(@PathVariable("id") Long id) throws ApiException{
+        return apiAccessItemService.getAccessItemFile(id);
+    }
+
 }

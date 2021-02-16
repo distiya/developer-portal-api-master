@@ -11,6 +11,7 @@ import gov.faa.notam.developerportal.service.ValidationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,6 +72,18 @@ public class NotamApiAccessItemServiceImpl implements NotamApiAccessItemService 
     }
 
     @Override
+    public byte[] getAccessItemFile(Long id) throws ApiException {
+        if(id <= 0){
+            throw new ApiException(MediaType.APPLICATION_OCTET_STREAM,HttpStatus.BAD_REQUEST,ERROR_INVALID_ACCESS_ITEM_ID);
+        }
+        Optional<NotamApiAccessItem> notamApiAccessItemOptional = notamApiAccessItemRepository.findById(id);
+        if(Boolean.TRUE.equals(notamApiAccessItemOptional.isEmpty())){
+            throw new ApiException(MediaType.APPLICATION_OCTET_STREAM,HttpStatus.NOT_FOUND,ERROR_NO_ACCESS_ITEM_FOUND);
+        }
+        return  notamApiAccessItemOptional.get().getContent();
+    }
+
+    @Override
     public void updateAccessItem(Long id, UpdateNotamApiAccessItemModel request) throws ApiException {
         validationService.validateAdminAccessRight();
         if(Boolean.FALSE.equals(StringUtils.hasText(request.getVersion())) && Boolean.FALSE.equals(StringUtils.hasText(request.getDescription())) && Boolean.FALSE.equals(StringUtils.hasText(request.getChangeLog()))){
@@ -83,7 +96,7 @@ public class NotamApiAccessItemServiceImpl implements NotamApiAccessItemService 
         if(Boolean.TRUE.equals(notamApiAccessItemOptional.isEmpty())){
             throw new ApiException(HttpStatus.NOT_FOUND,ERROR_NO_ACCESS_ITEM_FOUND);
         }
-        NotamApiAccessItem notamApiAccessItem = notamApiAccessItemOptional.orElse(null);
+        NotamApiAccessItem notamApiAccessItem = notamApiAccessItemOptional.get();
         updateApiAccessItem(notamApiAccessItem,request);
         notamApiAccessItemRepository.save(notamApiAccessItem);
     }
