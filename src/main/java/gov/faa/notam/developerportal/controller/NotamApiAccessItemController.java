@@ -7,9 +7,7 @@ import gov.faa.notam.developerportal.service.NotamApiAccessItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -33,6 +31,16 @@ public class NotamApiAccessItemController {
     @PostMapping(path = "/notamApiAccessItem", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public NotamApiAccessItemModel createNotamApiAccessItem(@RequestParam("file") MultipartFile file, CreateNotamAPIAccessItemRequest request) throws ApiException{
         return apiAccessItemService.createAccessItem(file,request);
+    }
+
+    @DeleteMapping(path = "/notamApiAccessItem/{id}")
+    public void deleteNotamApiAccessItem(@PathVariable("id") Long id) throws ApiException{
+        apiAccessItemService.deleteAccessItem(id);
+    }
+
+    @GetMapping(path = "/notamApiAccessItem/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public NotamApiAccessItemModel getNotamApiAccessItem(@PathVariable("id") Long id) throws ApiException{
+        return apiAccessItemService.getAccessItem(id);
     }
 
 }

@@ -23,5 +23,23 @@ public interface NotamApiAccessItemService {
      */
     NotamApiAccessItemModel createAccessItem(MultipartFile file, CreateNotamAPIAccessItemRequest request) throws ApiException;
 
+    /**
+     * Delete access item
+     *
+     * @param id the record id of the access item
+     * @return the access item
+     * @throws ApiException - if any error occurs.
+     */
+    void deleteAccessItem(Long id) throws ApiException;
+
+    /**
+     * Get access item
+     *
+     * @param id the record id of the access item
+     * @return the access item
+     * @throws ApiException - if any error occurs.
+     */
+    NotamApiAccessItemModel getAccessItem(Long id) throws ApiException;
+
 
 }
