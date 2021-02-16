@@ -21,6 +21,7 @@ public class NotamApiAccessItem extends AbstractAuditEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "item_type", nullable = false)
     private NotamApiAccessItemType type;
 
@@ -41,7 +42,7 @@ public class NotamApiAccessItem extends AbstractAuditEntity {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "content", columnDefinition = "BYTEA", nullable = false)
+    @Column(name = "content", nullable = false)
     private byte[] content;
 
     @Column(name = "file_name", nullable = false)

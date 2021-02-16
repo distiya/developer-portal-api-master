@@ -1,5 +1,6 @@
 package gov.faa.notam.developerportal.security.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.faa.notam.developerportal.security.JwtConfigurer;
 import gov.faa.notam.developerportal.security.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +34,12 @@ public class JwtConfigurerTest
 	 */
 	@Mock
 	private JwtTokenProvider jwtTokenProvider;
+
+	/**
+	 * Mocking object mapper
+	 */
+	@Mock
+	private ObjectMapper objectMapper;
 	
 	/**
 	 * Initialize JwtConfigurer.
@@ -40,7 +47,7 @@ public class JwtConfigurerTest
 	@BeforeEach
 	void setupEach() 
 	{
-		jwtConfigurer = new JwtConfigurer(jwtTokenProvider);
+		jwtConfigurer = new JwtConfigurer(jwtTokenProvider,objectMapper);
 	}
 	
 	/**

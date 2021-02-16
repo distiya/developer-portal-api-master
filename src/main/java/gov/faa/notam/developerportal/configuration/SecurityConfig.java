@@ -1,5 +1,6 @@
 package gov.faa.notam.developerportal.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.faa.notam.developerportal.model.entity.UserRole;
 import gov.faa.notam.developerportal.security.JwtConfigurer;
 import gov.faa.notam.developerportal.security.JwtTokenProvider;
@@ -43,6 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
 
     /**
+     * Jackson object mapper
+     */
+    private final ObjectMapper objectMapper;
+
+    /**
      * Password hash secret.
      */
     @Value("${security.secret.pbkdf2}")
@@ -70,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().authorizeRequests().anyRequest().authenticated();
 
         // Setup JWT authentication filter.
-        http.apply(new JwtConfigurer(jwtTokenProvider));
+        http.apply(new JwtConfigurer(jwtTokenProvider,objectMapper));
     }
     
     /**
