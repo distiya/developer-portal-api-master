@@ -2,7 +2,6 @@ package gov.faa.notam.developerportal.model.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -10,7 +9,6 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = false, of = "id")
 @Entity
 @Table(name = "user_count_per_country")
-@Where(clause = "not is_deleted")
 public class UserCount extends AbstractAuditEntity {
     private static final String SEQUENCE_NAME = "user_count_per_country_id_seq";
 

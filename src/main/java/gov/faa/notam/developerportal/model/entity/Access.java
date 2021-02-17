@@ -1,8 +1,8 @@
 package gov.faa.notam.developerportal.model.entity;
 
+import gov.faa.notam.developerportal.model.api.ApiAccessStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,8 +11,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false, of = "id")
 @Entity
 @Table(name = "access")
-@Where(clause = "not is_deleted")
-public class Access extends AbstractAuditEntity {
+public class Access{
     private static final String SEQUENCE_NAME = "access_id_seq";
 
     @Id
@@ -28,7 +27,8 @@ public class Access extends AbstractAuditEntity {
     @Column(name = "source")
     private String source;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 45)
-    private String status;
+    private ApiAccessStatus status;
 
 }

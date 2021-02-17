@@ -77,5 +77,7 @@ public class UserModel {
         setPrimaryPhone(user.getPrimaryPhone());
         setState(user.getState());
         setZipCode(user.getZipCode());
+        setCreatedDate(user.getCreatedAt());
+        setVerificationLink(user.getEmailConfirmationCode());
     }
 }

@@ -1,5 +1,6 @@
 package gov.faa.notam.developerportal.model.api;
 
+import gov.faa.notam.developerportal.model.entity.Access;
 import lombok.Data;
 
 import java.util.Date;
@@ -25,5 +26,12 @@ public class AccessEventModel {
     /**
      * The status of the access event
      */
-    private String status;
+    private ApiAccessStatus status;
+
+    public AccessEventModel(Access access){
+        setId(access.getId());
+        setDate_and_time(access.getDateAndTime());
+        setSource(access.getSource());
+        setStatus(access.getStatus());
+    }
 }

@@ -2,7 +2,6 @@ package gov.faa.notam.developerportal.model.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,7 +10,6 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false, of = "id")
 @Entity
 @Table(name = "hourly_api_usage")
-@Where(clause = "not is_deleted")
 public class HourlyAPIUsage extends AbstractAuditEntity {
     private static final String SEQUENCE_NAME = "hourly_api_usage_id_seq";
 

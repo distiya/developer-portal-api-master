@@ -1,8 +1,9 @@
 package gov.faa.notam.developerportal.model.entity;
 
+import gov.faa.notam.developerportal.model.api.ApiActivityStatus;
+import gov.faa.notam.developerportal.model.api.NotamApiAccessItemType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,8 +12,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false, of = "id")
 @Entity
 @Table(name = "activity")
-@Where(clause = "not is_deleted")
-public class Activity extends AbstractAuditEntity {
+public class Activity{
     private static final String SEQUENCE_NAME = "activity_id_seq";
 
     @Id
@@ -31,10 +31,12 @@ public class Activity extends AbstractAuditEntity {
     @Column(name = "name")
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", length = 45)
-    private String type;
+    NotamApiAccessItemType type;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 45)
-    private String status;
+    private ApiActivityStatus status;
 
 }

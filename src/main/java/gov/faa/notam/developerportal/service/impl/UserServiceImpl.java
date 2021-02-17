@@ -10,6 +10,7 @@ import gov.faa.notam.developerportal.security.PasswordPolicy;
 import gov.faa.notam.developerportal.security.ReCaptcha;
 import gov.faa.notam.developerportal.security.SecurityUtil;
 import gov.faa.notam.developerportal.service.EmailService;
+import gov.faa.notam.developerportal.service.StatisticsService;
 import gov.faa.notam.developerportal.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,9 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,6 +56,11 @@ public class UserServiceImpl implements UserService {
      * Email service for generating and sending emails.
      */
     private final EmailService emailService;
+
+    /**
+     * Statistics service to calculate last twenty four hours activity
+     */
+    private final StatisticsService statisticsService;
 
     /**
      * Page size configuration.
@@ -210,7 +214,11 @@ public class UserServiceImpl implements UserService {
 
             SearchResponse<UserModel> response = new SearchResponse<>();
             response.setTotalCount(page.getTotalElements());
-            response.setItems(page.get().map(UserModel::new).collect(Collectors.toList()));
+            List<UserModel> pageUserResultList = page.get().map(UserModel::new).collect(Collectors.toList());
+            List<Long> userIDList = pageUserResultList.stream().map(UserModel::getId).collect(Collectors.toList());
+            Map<Long, LastTwentyFourHoursActivityModel> lastTwentyFourHourActivityUsageMap = statisticsService.getLastTwentyFourHourActivityUsage(userIDList);
+            pageUserResultList.forEach(um-> um.setLast24hoursActivityUsage(lastTwentyFourHourActivityUsageMap.get(um.getId())));
+            response.setItems(pageUserResultList);
             return response;
         } catch (Exception e) {
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to search user.", e);

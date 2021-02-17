@@ -1,5 +1,6 @@
 package gov.faa.notam.developerportal.model.api;
 
+import gov.faa.notam.developerportal.model.entity.Activity;
 import lombok.Data;
 
 import java.util.Date;
@@ -30,5 +31,13 @@ public class ActivityEventModel {
     /**
      * The status of the activity event
      */
-    private String status;
+    private ApiActivityStatus status;
+
+    public ActivityEventModel(Activity activity){
+        setId(activity.getId());
+        setName(activity.getName());
+        setType(activity.getType());
+        setDate_and_time(activity.getDateTimeHour());
+        setStatus(activity.getStatus());
+    }
 }

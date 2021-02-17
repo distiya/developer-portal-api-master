@@ -10,6 +10,7 @@ import gov.faa.notam.developerportal.security.PasswordPolicy;
 import gov.faa.notam.developerportal.security.ReCaptcha;
 import gov.faa.notam.developerportal.security.SecurityUtil;
 import gov.faa.notam.developerportal.service.EmailService;
+import gov.faa.notam.developerportal.service.StatisticsService;
 import gov.faa.notam.developerportal.service.impl.UserServiceImpl;
 import gov.faa.notam.developerportal.service.impl.UserSpecification;
 import org.hibernate.exception.ConstraintViolationException;
@@ -80,6 +81,9 @@ public class UserServiceImplTest
 	@Mock
 	private PaginationConfig paginationConfig;
 
+	@Mock
+	private StatisticsService statisticsService;
+
 	/**
 	 * Class under test
 	 */
@@ -91,7 +95,7 @@ public class UserServiceImplTest
 	@BeforeEach
 	public void setup()
 	{
-	  userServiceImpl = new UserServiceImpl(userRepository, reCaptcha, passwordPolicy, passwordEncoder, emailService, paginationConfig);
+	  userServiceImpl = new UserServiceImpl(userRepository, reCaptcha, passwordPolicy, passwordEncoder, emailService, statisticsService, paginationConfig);
 	}
 
 
